@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> CPH Skoler</title>
+    <style>
+        .skole{
+            color:green ;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1> skoler i København </h1>
+        <address>
+            Data stammer fra:
+            <a href="http://oiorest.dk/danmark/kommuner/101/skoler.json">oiorest.dk/danmark/kommuner/101/skoler.json</a>
+
+        </address>
+    </header>
+    <article id="skoler_i_cph">
+
+    </article>
+
+     <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <script>
+        $.ajax({
+
+            type: 'GET',
+
+            url: 'http://oiorest.dk/danmark/kommuner/101/skoler.json',
+
+            dataType: "jsonp",
+
+
+            success: function (data) {
+                // Here's where you handle a successful response.
+                console.log('***************************************************');
+                console.log(" Here's where you handle a successful response.");
+                console.log('***************************************************');
+
+               // console.log(data[0].navn);
+
+                console.log('***************************************************');
+
+                var output = '<ul>';
+                for (var i = 0; i < data.length; i++) {
+                    output += '<li class="skole">'
+                                + data[i].navn + ' / '
+                                + data[i].type + ' '
+                                + '</li>';
+                }
+                output += '</ul>';
+
+                console.log(output);
+
+                $('#skoler_i_cph').html(output);
+
+            },
+
+            error: function () {
+                // Here's where you handle an error response.
+                // Note that if the error was due to a CORS issue,
+                // this function will still fire, but there won't be any additional
+                // information about the error.
+
+                console.log("error");
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

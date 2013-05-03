@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> CPH Skoler</title>
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2012.2.710/styles/kendo.dataviz.min.css">
+</head>
+<body>
+    <header>
+        <h1> skoler i København </h1>
+        
+    </header>
+    <article id="skoler_i_cph">
+
+    </article>
+
+    <div role="main">
+        <!-- chart/gauge -->
+        <div id="chart">
+        </div>
+    </div>
+
+     <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <script>
+        $.ajax({
+
+            type: 'GET',
+
+            url: 'http://oiorest.dk/danmark/kommuner/101/skoler.json',
+
+            dataType: "jsonp",
+
+
+            success: function (data) {
+               
+               var grafarray = new Array(); 
+                var output = '<ul>';
+                for (var i = 0; i < data.length; i++) {
+                    output += '<li class="skole">'
+                                + data[i].navn + ' / '
+                                //+ data[i].type + ' / '
+                                + data[i].institutionsnr + ' '
+                                + '</li>';
+                }
+                output += '</ul>';
+
+                
+
+                $('#skoler_i_cph').html(output);
+
+
+
+                jQuery(document).ready(function($) {
+            $("#chart").kendoChart({
+                series: [
+                    { name: data[0].navn, data: [data[0].institutionsnr] },
+                    { name: data[1].navn, data: [data[1].institutionsnr] }
+                ],
+                seriesDefaults: { type: "bar" },
+                width: 400
+            });
+        });
+
+            },
+
+            
+        });
+
+        
+    </script>
+    
+    <script src="http://cdn.kendostatic.com/2012.2.710/js/kendo.dataviz.min.js"></script>
+</body>
+</html>
